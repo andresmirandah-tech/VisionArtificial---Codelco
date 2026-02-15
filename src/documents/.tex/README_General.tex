@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{verbatim}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+\section*{Descripción General del Proyecto}
+
+El presente proyecto tiene como objetivo implementar un modelo de segmentación semántica basado en la arquitectura DeepLabV3+ para la detección y cuantificación de regiones relevantes en imágenes correspondientes a celdas de flotación. En particular, se busca identificar y segmentar regiones asociadas a burbujas, espuma, borde e interior/exterior de la celda.
+
+La motivación principal radica en explorar la viabilidad del uso de técnicas de visión artificial como base para la construcción de un indicador cuantitativo de proceso, definido como el porcentaje de burbujas presentes en la imagen, con potencial integración futura en sistemas de monitoreo industrial.
+
+\section*{Objetivos}
+
+\begin{itemize}
+    \item Implementar un modelo de segmentación semántica para imágenes de celdas de flotación.
+    \item Detectar y clasificar regiones de interés (burbuja, espuma, borde, exterior).
+    \item Calcular métricas cuantitativas de desempeño (IoU y Dice Similarity Coefficient).
+    \item Definir un indicador de proceso basado en el porcentaje de burbujas en la imagen.
+    \item Evaluar la estabilidad del indicador en secuencias de imágenes (análisis temporal).
+    \item Proponer una arquitectura futura de integración con sistemas de control industrial (DCS).
+\end{itemize}
+
+\section*{Fundamentación Matemática del Modelo}
+
+El modelo implementado se basa en Redes Neuronales Convolucionales (CNN), las cuales utilizan operadores de convolución para extraer características espaciales relevantes de una imagen.
+
+Sea $I(x,y)$ una imagen digital, la operación de convolución discreta puede representarse como:
+
+\[
+(I * K)(x,y) = \sum_{i}\sum_{j} I(x-i, y-j)K(i,j)
+\]
+
+donde $K$ representa el kernel o filtro convolucional.  
+La red aprende automáticamente los pesos de estos filtros mediante optimización basada en descenso por gradiente y retropropagación.
+
+En segmentación semántica, el objetivo es aprender una función:
+
+\[
+f_\theta : \mathbb{R}^{H \times W \times C} \rightarrow \{0,1,2,3\}^{H \times W}
+\]
+
+que asigne una etiqueta a cada píxel de la imagen.
+
+\section*{Arquitectura DeepLabV3+}
+
+DeepLabV3+ incorpora:
+
+\begin{itemize}
+    \item Backbone profundo (ej. ResNet-50) para extracción de características.
+    \item Convoluciones dilatadas (atrous convolution) para ampliar el campo receptivo sin perder resolución.
+    \item Módulo Atrous Spatial Pyramid Pooling (ASPP) para capturar información multiescala.
+    \item Decoder para refinamiento espacial y recuperación de detalles finos.
+\end{itemize}
+
+Esta arquitectura resulta especialmente adecuada para segmentar estructuras irregulares y de contorno difuso como espuma y burbujas.
+
+\section*{Herramientas Utilizadas}
+
+\begin{itemize}
+    \item Python 3.x
+    \item PyTorch (entrenamiento y modelo DeepLabV3+)
+    \item Torchvision
+    \item OpenCV (lectura y procesamiento de imágenes)
+    \item NumPy (operaciones matriciales)
+    \item Pillow (manejo básico de imágenes)
+    \item Matplotlib (visualización de métricas)
+    \item LabelMe (anotación manual de máscaras)
+\end{itemize}
+
+\section*{Métricas de Evaluación}
+
+\textbf{Intersection over Union (IoU)}:
+\[
+IoU = \frac{|A \cap B|}{|A \cup B|}
+\]
+
+\textbf{Dice Similarity Coefficient (DSC)}:
+\[
+DSC = \frac{2|A \cap B|}{|A| + |B|}
+\]
+
+Ambas métricas miden el grado de solapamiento entre la máscara real y la máscara predicha.
+
+\section*{Serie Temporal del Indicador}
+
+El porcentaje de burbujas definido como:
+
+\[
+\% \text{Burbujas} = \frac{\text{Pixeles clase burbuja}}{\text{Total pixeles imagen}} \times 100
+\]
+
+puede analizarse como una serie temporal cuando se dispone de secuencias de imágenes.  
+Esto permite estudiar estabilidad, variabilidad y posibles correlaciones con variables operacionales del proceso de flotación.
+
+\section*{Resultados Esperados}
+
+Se espera que el modelo logre:
+
+\begin{itemize}
+    \item Segmentación consistente bajo distintas condiciones de iluminación.
+    \item Baja variabilidad del indicador frente a ruido visual.
+    \item Concordancia adecuada entre porcentaje real y predicho.
+\end{itemize}
+
+\section*{Proyección Industrial}
+
+El indicador desarrollado podría integrarse como variable auxiliar en sistemas de monitoreo industrial (DCS), permitiendo:
+
+\begin{itemize}
+    \item Supervisión visual automatizada del estado de la celda.
+    \item Detección temprana de anomalías.
+    \item Potencial uso como variable complementaria en esquemas de control.
+\end{itemize}
+
+\section*{Limitaciones}
+
+\begin{itemize}
+    \item Tamaño reducido del dataset en etapa inicial.
+    \item Dependencia de anotación manual.
+    \item Posible sobreajuste en conjuntos pequeños.
+    \item Sensibilidad a variaciones extremas de iluminación.
+\end{itemize}
+
+\section*{Estado Actual del Proyecto}
+
+Actualmente el proyecto cuenta con:
+
+\begin{itemize}
+    \item Pipeline completo de procesamiento, entrenamiento e inferencia.
+    \item Cálculo automático de métricas por imagen.
+    \item Generación del indicador porcentual de burbujas.
+    \item Validación preliminar con conjuntos de datos reducidos.
+\end{itemize}
+
+El siguiente paso consiste en ampliar el dataset y realizar evaluación estadística más robusta.
+
+\end{document}

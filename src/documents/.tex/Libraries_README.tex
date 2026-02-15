@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\begin{document}
+\section*{Librerías Utilizadas y Elementos Más Relevantes}
+
+\subsection*{Librería \texttt{os} (\texttt{import os})}
+Permite trabajar con rutas y directorios del sistema de manera segura y portable entre distintos sistemas operativos.
+
+\begin{itemize}
+    \item \texttt{os.path.join(dir\_1, dir\_2, ..., dir\_n)}: Une correctamente múltiples directorios evitando errores por concatenación manual de strings.
+    
+    \item \texttt{os.makedirs(dir, exist\_ok=True)}: Crea una carpeta en la ruta especificada. Si ya existe y \texttt{exist\_ok=True}, no genera error.
+    
+    \item \texttt{os.listdir(dir)}: Retorna una lista con los nombres de los elementos contenidos en el directorio.
+    
+    \item \texttt{os.path.dirname(dir)}: Retorna la ruta eliminando el último elemento del directorio.
+    
+    \item \texttt{os.path.abspath(\_\_file\_\_)}: Convierte la ruta del script actual en una ruta absoluta.
+    
+    \item \texttt{\_\_file\_\_}: Variable reservada que almacena la ruta del archivo en ejecución.
+    
+    \item \texttt{os.path.splitext(nombre)}: Retorna una tupla del tipo (nombre, extensión).
+    
+    Ejemplo:
+    \begin{itemize}
+        \item \texttt{imagen.png} $\rightarrow$ (\texttt{imagen}, \texttt{.png})
+        \item \texttt{archivo.tar.gz} $\rightarrow$ (\texttt{archivo.tar}, \texttt{.gz})
+    \end{itemize}
+\end{itemize}
+
+\textbf{Ruta Relativa:} Depende del directorio desde donde se ejecuta el script. \\
+\textbf{Ruta Absoluta:} Indica la ubicación completa del archivo desde la raíz del sistema.
+
+\textbf{Analogía:} \\
+Ruta Absoluta $\rightarrow$ ``Vivo en país X, ciudad Y, calle Z número N''. \\
+Ruta Relativa $\rightarrow$ ``Desde donde estás, camina dos cuadras a la derecha''.
+
+El uso de rutas absolutas permite independizar la ejecución del script respecto al directorio actual.
+
+---
+
+\subsection*{Librería \texttt{NumPy} (\texttt{import numpy as np})}
+
+Permite trabajar con vectores, matrices y tensores, fundamentales para representar imágenes como arreglos numéricos.
+
+\begin{itemize}
+    \item \texttt{np.full((dimensiones), elemento, dtype)}: Crea un arreglo relleno completamente con un valor específico.
+    \item \texttt{np.array(obj)}: Crea o convierte un objeto a un arreglo de NumPy.
+    \item \texttt{np.zeros((dimensiones))}: Crea un arreglo compuesto únicamente por ceros.
+    \item \texttt{np.logical\_and(a,b)}: Operación lógica AND elemento a elemento.
+    \item \texttt{np.logical\_or(a,b)}: Operación lógica OR elemento a elemento.
+\end{itemize}
+
+En imágenes RGB, el tercer parámetro representa las tres componentes de color.
+
+---
+
+\subsection*{Librería \texttt{OpenCV} (\texttt{import cv2})}
+
+Permite manipulación avanzada de imágenes con alto rendimiento.
+
+\begin{itemize}
+    \item \texttt{cv2.imread(filename, flag)}: Carga una imagen como arreglo NumPy. Las imágenes a color se leen en formato BGR.
+    \item \texttt{cv2.fillPoly(image, points, color)}: Dibuja polígonos sobre una imagen, utilizado para construir máscaras desde anotaciones.
+\end{itemize}
+
+---
+
+\subsection*{Librería \texttt{Pillow} (\texttt{from PIL import Image})}
+
+Permite manipulación básica de imágenes.
+
+\begin{itemize}
+    \item \texttt{Image.fromarray(array).save(dir)}: Guarda un arreglo NumPy como imagen.
+    \item \texttt{Image.open(imagen)}: Abre una imagen como objeto PIL.
+    \item \texttt{convert("RGB")}: Convierte la imagen a formato RGB.
+\end{itemize}
+
+\textbf{Observación:} Para guardar imágenes correctamente, el arreglo debe ser tipo \texttt{uint8} con valores en el rango [0,255].
+
+---
+
+\subsection*{Librería \texttt{json} (\texttt{import json})}
+
+Permite trabajar con archivos en formato JSON.
+
+\begin{itemize}
+    \item \texttt{json.load(file)}: Convierte el contenido del archivo JSON a un objeto de Python.
+\end{itemize}
+
+Es importante que el archivo JSON esté correctamente estructurado.
+
+---
+
+\subsection*{Librería \texttt{subprocess}}
+
+Permite ejecutar comandos del sistema desde Python.
+
+\begin{itemize}
+    \item \texttt{subprocess.run()}: Ejecuta un comando en la terminal. En este proyecto se utilizó para abrir automáticamente LabelMe con rutas predefinidas de inicializacion de imágenes y guardado de los json.
+\end{itemize}
+
+---
+
+\subsection*{Librería \texttt{sys} (\texttt{import sys})}
+
+Permite interactuar con el entorno del intérprete.
+
+\begin{itemize}
+    \item \texttt{sys.path.append(dir)}: Añade un directorio a la lista de rutas donde Python busca módulos.
+\end{itemize}
+
+---
+
+\subsection*{Librería \texttt{Torch} (\texttt{import torch})}
+
+Constituye el núcleo del modelo de segmentación.
+
+\begin{itemize}
+    \item \texttt{DataLoader (torch.utils.data)}: Permite crear iteradores eficientes para cargar datos durante el entrenamiento.
+    
+    \item \texttt{torchvision.transforms}: Permite aplicar transformaciones como normalización, conversión a tensor y redimensionamiento.
+    
+    \item \texttt{deeplabv3\_resnet50 (torchvision.models.segmentation)}: Arquitectura de segmentación semántica basada en DeepLabV3+ con backbone ResNet-50.
+\end{itemize}
+
+
+\end{document}

@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{verbatim}
+\usepackage{geometry}
+\usepackage{dirtree}
+
+
+\begin{document}
+\dirtree{%
+.1 ArtificialVision/.
+.2 main.py.
+.2 mainv2.py.
+.2 config/.
+.3 config.yaml.
+.2 dataset/.
+.3 segmentation\_dataset.py.
+.3 raw\_images/.
+.3 labelme\_json/.
+.3 masks\_color/.
+.3 masks\_labels/.
+.3 splits/.
+.4 train/.
+.5 images/.
+.5 masks/.
+.4 val/.
+.5 images/.
+.5 masks/.
+.2 documents/.
+.3 README.txt.
+.3 Libraries\_README.txt.
+.3 Estructura\_programa.txt.
+.2 inference/.
+.3 images/.
+.4 real\_masks/.
+.5 labelme\_json/.
+.5 masks\_labels/.
+.3 outputs/.
+.4 colored/.
+.4 masks/.
+.3 predict.py.
+.2 metrics/.
+.3 segmentation\_metrics.py.
+.3 segmentation\_global\_metrics.py.
+.3 statistics\_metrics.py.
+.3 plot\_loss.py.
+.2 models/.
+.3 modelos\_entrenados\_pth.
+.2 scripts/.
+.3 use\_labelme.py.
+.3 json\_to\_masks.py.
+.3 colorize\_masks.py.
+.3 colorize\_masks\_for\_inference.py.
+.3 split\_dataset.py.
+.3 split\_inference\_dataset.py.
+.3 calculate\_proportions.py.
+.2 training/.
+.3 train\_deeplab.py.
+.2 utils/.
+.3 labels.py.
+.3 rename.py.
+}
+
+
+\end{document}

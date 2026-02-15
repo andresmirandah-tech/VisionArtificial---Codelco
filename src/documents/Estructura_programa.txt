@@ -1,0 +1,76 @@
+Estructuración principal
+│
+|
+├── main.py                        # Script principal desde donde importamos los demás y ejecutamos todo el modelo, desde el procesamiento de imágenes hasta el cálculo de métricas          
+├── mainv2.py                        # Script principal desde donde importamos los demás y ejecutamos todo el modelo, desde el procesamiento de imágenes hasta el cálculo de métricas          
+|
+|
+├── config/
+│   └── config.yaml                # rutas, tamaños, parámetros de entrenamiento
+|
+|
+├── dataset/
+|   ├── __init__.py                # Script que va vacío (para el entrenamiento)
+|   ├── __pycache__/               # Carpeta que se crea después del entrenamiento
+|   ├── segmentation_dataset.py    # Script usado para el entrenamiento. Permite manejar las imágenes utilizadas como objetos de una clase.
+│   ├── raw_images/                # Contiene todas las imágenes a utilizar en el entrenamiento
+│   ├── labelme_json/              # Contiene los documentos .json generados por labelme
+│   ├── masks_color/               # Contiene las máscaras coloreadas (solo para verificación de que la conversión json -> máscara es correcta)
+|   |── masks_labels/              # Contiene las máscaras (Son imágenes completamente negras pero los pixeles contienen la clasificación por clase)
+│   └── splits/                    # Contiene la división de las imágenes en entrenamiento y validación. Cada una de estas últimas debe contener la imagen y su respectiva máscara
+│       ├── train/                 # Contiene los datos de entrenamiento (imagen,máscara)
+│       │   ├── images/            # Contiene las imágenes a usar en entrenamiento
+│       │   └── masks/             # Contiene las máscaras a usar en entrenamiento
+│       └── val/                   # Contiene los datos de validación (imagen,máscara)
+│           ├── images/            # Contiene las imágenes a usar en validación
+│           └── masks/             # Contiene las máscaras a usar en validación
+|
+|
+├── documents/                     # Contiene documentos de utilidad
+│   └── README.txt                 # Recopila el objetivo del modelo, las herramientas utilizadas para el modelo, fundamentos bajo las que operan.
+|   └── Libraries_README.txt       # Recopila las librerías usadas para cada script con una breve explicación de funcionamiento. Recopila cada método usado junto con una breve explicación de funcionamiento
+|   └── Estructura_programa.txt    # Contiene la estructura del programa junto una breve explicación del funcionamiento de cada componente
+|
+|
+├── inference/
+|    |── images                               # Imágenes para probar el modelo entrenado
+│        │   ├── real_masks                   # Contiene las máscaras reales (tambien generadas con labelme)
+|        │        │   └── labelme_json/       # Contiene los documentos .json generados por labelme
+|        |        |   └── masks_labels/       # Contiene las máscaras (Son imágenes completamente negras pero los pixeles contienen la clasificación por clase)
+|    ├── outputs                              # Contiene las máscaras predichas por el modelo ya entrenado.
+│       │   ├── colored/                      # Contiene las máscaras coloreadas (solo para verificación de que la conversión json -> máscara es correcta)
+│       │   └── masks/                        # Contiene las máscaras predichas (Son imágenes completamente negras pero los pixeles contienen la clasificación por clase)
+│   └── predict.py                            # Script que ejecuta la inferencia del modelo sobre imágenes nuevas.
+|
+|
+├── metrics
+│   └── __pycache__                     
+│   └── segmentation_metrics.py              # Script que ejecuta metricas del modelo (IoU/DSC)
+│   └── segmentation_global_metrics.py       # Script que obtienen las métricas globales del modelo
+│   └── statistics_metrics.py                # Script que ejecuta metricas estadisticas
+│   └── plot_loss.py                         # Script que grafica la evolución de la función de pérdida
+|
+|
+├── models/                                  # Guarda los modelos ya entrenados (archivos extensión .pth)
+|
+|
+├── scripts/                                 # Contiene scripts enfocados a la parte del procesamiento de las imágenes
+|   ├── use_labelme.py                       # Script que inicializa labelme con las imágenes ya cargadas y creamos manualmente masks formato JSON
+│   ├── json_to_masks.py                     # Script que convierte de JSON a un numpy array para tratar en python
+│   ├── colorize_masks.py                    # Script que colorea las imágenes (solo para corroborar)
+|   ├── colorize_masks_for_inferece.py       # Script colorea las masks generadas en inferencia
+│   ├── split_dataset.py                     # Script que divide los datos en train/val (80%/20%)
+│   ├── split_train_inference.py             # Script que divide los datos en train/val y reparte las imágenes para la inferencia
+│   ├── calculate_proportions.py             # Script que calcula los porcentajes de detección de cada elemento respecto al total de la imagen
+│
+│  
+├── training/
+|   ├── __pycache__/            # Carpeta que se crea después del entrenamiento
+|   ├── __init__.py             # Script que va vacío (para el entrenamiento)
+│   └── train_deeplab.py        # Script para ejecutar el entrenamiento del modelo
+│
+|
+└── utils/         
+    ├── __pycache__/     # Carpeta que se crea después del entrenamiento
+    ├── labels.py        # Script que contiene el formato de las etiquetas y colores.
+    ├── rename.py        # Script que estandariza el nombre de las imágenes
