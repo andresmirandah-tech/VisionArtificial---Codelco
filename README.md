@@ -22,8 +22,11 @@ Este proyecto implementa un pipeline completo de:
 
 ## Cómo ejecutar
 
+```bash
 git clone https://github.com/andresmirandah-tech/VisionArtificial---Codelco.git
 cd VisionArtificial---Codelco
 pip install -r requirements.txt
 python src/main.py
+```
+
 
